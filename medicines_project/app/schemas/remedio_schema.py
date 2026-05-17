@@ -10,3 +10,8 @@ class RemedioResponse(BaseModel):
     nome: str
     fabricante: str
     principio_ativo: str
+
+class RemedioGetResponse(BaseModel):
+    nome: str
+    fabricante: str
+    principio_ativo: str
