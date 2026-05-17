@@ -14,5 +14,5 @@ router = APIRouter(prefix="/remedios")
         "/",
         response_model=RemedioResponse
 )
-def create_user(remedio: RemedioCreate, db: Session = Depends(get_db)):
+def create_remedio(remedio: RemedioCreate, db: Session = Depends(get_db)):
     return RemedioService.create_user(db, remedio)
