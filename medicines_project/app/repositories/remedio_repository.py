@@ -21,12 +21,22 @@ class RemedioRepository:
 
 
     @staticmethod
+    def get_all(db: Session):
+        return (
+                db.query(RemedioModel)
+                .filter()
+                .all()
+        )
+
+
+    @staticmethod
     def get_by_id(db: Session, id: int):
         return (
                 db.query(RemedioModel)
                 .filter(RemedioModel.id == id)
                 .first()
         )
+
 
     @staticmethod
     def get_by_nome(db: Session, nome: str):

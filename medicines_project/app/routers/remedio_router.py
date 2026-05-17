@@ -11,12 +11,29 @@ from services.remedio_service import RemedioService
 
 router = APIRouter(prefix="/remedios")
 
+@router.get("/")
+def get_remedio(db: Session = Depends(get_db)):
+    all_remedios = [
+            RemedioGetResponse(
+                nome=remedio.nome,
+                fabricante=remedio.fabricante,
+                principio_ativo=remedio.principio_ativo
+            )
+            for remedio in RemedioService.find_all(db)
+    ]
+
+    return {
+            "remedios": all_remedios
+    }
+
+
 @router.get(
         "/{remedio_id}",
         response_model=RemedioGetResponse
 )
 def get_remedio_by_id(remedio_id: int, db: Session = Depends(get_db)):
     return RemedioService.find_remedio_by_id(db, remedio_id)
+
 
 @router.post(
         "/",

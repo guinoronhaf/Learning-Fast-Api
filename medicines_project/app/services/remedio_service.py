@@ -25,6 +25,13 @@ class RemedioService:
 
 
     @staticmethod
+    def find_all(db: Session):
+        all_remedios = RemedioRepository.get_all(db)
+        
+        return all_remedios
+
+
+    @staticmethod
     def find_remedio_by_id(db: Session, remedio_id: int):
 
         existing_remedio = RemedioRepository.get_by_id(
