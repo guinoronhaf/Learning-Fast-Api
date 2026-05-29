@@ -5,6 +5,9 @@ from fastapi import Depends, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from schemas.auth_schema import TokenProviderData
 
+# quando o código estiver em produção, essa linha não deve existir.
+os.environ["FIREBASE_AUTH_EMULATOR_HOST"] = "localhost:9099"
+
 firebase_credentials_path = os.getenv("FIREBASE_JSON_PATH")
 
 cred = credentials.Certificate(firebase_credentials_path)
