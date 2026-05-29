@@ -35,6 +35,14 @@ def get_remedio_by_id(remedio_id: int, db: Session = Depends(get_db)):
     return RemedioService.find_remedio_by_id(db, remedio_id)
 
 
+@router.get(
+        "/search/{remedio_nome}",
+        response_model=RemedioGetResponse
+)
+def get_remedio_by_nome(remedio_nome: str, db: Session = Depends(get_db)):
+    return RemedioService.find_remedio_by_nome(db, remedio_nome)
+
+
 @router.post(
         "/",
         response_model=RemedioResponse

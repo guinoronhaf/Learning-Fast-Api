@@ -3,11 +3,18 @@ from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
+SCHEMA_NAME = "remedios"
+
 load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(
+        DATABASE_URL,
+        connect_args = {
+            "options": f"-c search_path={SCHEMA_NAME}"
+        }
+)
 
 SessionLocal = sessionmaker(
         autocommit=False,

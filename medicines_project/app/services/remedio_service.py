@@ -50,3 +50,23 @@ class RemedioService:
                 fabricante=existing_remedio.fabricante,
                 principio_ativo=existing_remedio.principio_ativo
         )
+
+    @staticmethod
+    def find_remedio_by_nome(db: Session, remedio_nome: str):
+
+        existing_remedio = RemedioRepository.get_by_nome(
+                db,
+                remedio_nome
+        )
+
+        if not existing_remedio:
+            raise HTTPException(
+                    status_code=401,
+                    detail="Remédio não encontrado."
+            )
+
+        return RemedioGetResponse(
+                nome=existing_remedio.nome,
+                fabricante=existing_remedio.fabricante,
+                principio_ativo=existing_remedio.principio_ativo
+        )
