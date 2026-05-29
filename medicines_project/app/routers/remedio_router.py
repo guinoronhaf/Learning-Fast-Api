@@ -8,6 +8,7 @@ from schemas.remedio_schema import (
         RemedioGetResponse
 )
 from services.remedio_service import RemedioService
+from services.auth_service import verify_token
 
 router = APIRouter(prefix="/remedios")
 
