@@ -8,12 +8,13 @@ from schemas.remedio_schema import (
         RemedioGetResponse
 )
 from services.remedio_service import RemedioService
+from schemas.auth_schema import TokenProviderData
 from services.auth_service import verify_token
 
 router = APIRouter(prefix="/remedios")
 
 @router.get("/")
-def get_remedio(db: Session = Depends(get_db)):
+def get_remedio(db: Session = Depends(get_db), decoded_token: TokenProviderData = Depends(verify_token)):
     all_remedios = [
             RemedioGetResponse(
                 nome=remedio.nome,
@@ -32,7 +33,7 @@ def get_remedio(db: Session = Depends(get_db)):
         "/{remedio_id}",
         response_model=RemedioGetResponse
 )
-def get_remedio_by_id(remedio_id: int, db: Session = Depends(get_db)):
+def get_remedio_by_id(remedio_id: int, db: Session = Depends(get_db), decoded_token = Depends(verify_token)):
     return RemedioService.find_remedio_by_id(db, remedio_id)
 
 
@@ -40,7 +41,7 @@ def get_remedio_by_id(remedio_id: int, db: Session = Depends(get_db)):
         "/search/{remedio_nome}",
         response_model=RemedioGetResponse
 )
-def get_remedio_by_nome(remedio_nome: str, db: Session = Depends(get_db)):
+def get_remedio_by_nome(remedio_nome: str, db: Session = Depends(get_db), decoded_token = Depends(verify_token)):
     return RemedioService.find_remedio_by_nome(db, remedio_nome)
 
 
@@ -48,5 +49,5 @@ def get_remedio_by_nome(remedio_nome: str, db: Session = Depends(get_db)):
         "/",
         response_model=RemedioResponse
 )
-def create_remedio(remedio: RemedioCreate, db: Session = Depends(get_db)):
+def create_remedio(remedio: RemedioCreate, db: Session = Depends(get_db), decoded_token = Depends(verify_token)):
     return RemedioService.create_remedio(db, remedio)
